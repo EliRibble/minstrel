@@ -87,3 +87,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Stuff around my dev env
+minstrel.egg-info
+minstrel/templates
