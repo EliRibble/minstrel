@@ -73,6 +73,7 @@ def main():
         author_email='junk@theribbles.org',
         install_requires=[
             'chryso==1.25',
+            'flask',
         ],
         extras_require={
             'develop': [

@@ -1,0 +1,15 @@
+version: '2'
+services:
+    db:
+        container_name: minstrel-db
+        image: authentise/pgcrypto
+    web:
+        command: /src/bin/minstrel-debug
+        container_name: minstrel-web
+        depends_on:
+            - db
+        image: eliribble/minstrel
+        ports:
+            - "8000:8000"
+        volumes:
+            - '.:/src'
