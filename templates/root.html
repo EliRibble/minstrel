@@ -1,4 +1,9 @@
 {% extends 'layout.html' %}
 {% block main_content %}
 <p>Welcome.</p>
+<h1>Music</h1>
+<ul>
+{% for track in music %}
+<li><a href="/track/{{ track }}/">{{ track }}</a></li>
+{% endfor %}
 {% endblock %}
