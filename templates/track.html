@@ -1,8 +1,17 @@
 {% extends 'layout.html' %}
+{% block javascript %}
+<script>
+window.onload = function() {
+  var player = document.getElementById('player');
+  player.play();
+  console.log('playing');
+}
+</script>
+{% endblock %}
 {% block main_content %}
 <h1>Play it</h1>
-<audio controls>
- <source src="/music/{{filename}}/" type="audio/mp3">
+<audio id="player" controls>
+ <source src="/music/{{filename}}/" type="audio/mp3" autoplay="true">
  Your browser does not support audio
 </audio>
 {% endblock %}
