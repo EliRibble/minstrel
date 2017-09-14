@@ -14,4 +14,7 @@ window.onload = function() {
  <source src="/music/{{filename}}/" type="audio/mp3" autoplay="true">
  Your browser does not support audio
 </audio>
+<form method="POST" action="/next/">
+  <input type="submit" value="next"></input>
+</form>
 {% endblock %}

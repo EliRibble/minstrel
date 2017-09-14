@@ -1,12 +1,31 @@
 import flask
-import os
+import logging
+
+import minstrel.tracks
+
+LOGGER = logging.getLogger(__name__)
 
 blueprint = flask.Blueprint('routes', __name__)
 
+MOOD = None
+
 @blueprint.route('/')
 def index():
-    music = [track for track in os.listdir('/music') if os.path.isfile('/music/' + track)]
-    return flask.render_template('root.html', music=music)
+    tracks = minstrel.tracks.get_all()
+    return flask.render_template('root.html', tracks=tracks)
+
+@blueprint.route('/mood/', methods=['POST'])
+def mood_post():
+    global MOOD
+    MOOD = flask.request.form['mood']
+    LOGGER.info("Got a new mood of %s", MOOD)
+    track = minstrel.tracks.next_track_for_mood(MOOD)
+    return flask.redirect(track.url())
+
+@blueprint.route('/next/', methods=['GET', 'POST'])
+def next_track():
+    next_track = minstrel.tracks.next_track_for_mood(MOOD)
+    return flask.redirect(next_track.url())
 
 @blueprint.route('/track/<filename>/')
 def track(filename):

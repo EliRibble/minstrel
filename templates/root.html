@@ -1,9 +1,8 @@
 {% extends 'layout.html' %}
 {% block main_content %}
-<p>Welcome.</p>
-<h1>Music</h1>
-<ul>
-{% for track in music %}
-<li><a href="/track/{{ track }}/">{{ track }}</a></li>
-{% endfor %}
+<p>Welcome to Minstrel. I've got {{ tracks|length }} tracks to play. What's your mood?</p>
+<form method="POST" action="/mood/">
+<input type="text" name="mood">
+<button class="btn" type="submit">Go</button>
+</form>
 {% endblock %}
