@@ -8,6 +8,7 @@ import minstrel.server
 LOGGER = logging.getLogger(__name__)
 
 def run(debug=True):
+    logging.basicConfig(level=logging.DEBUG)
     app = minstrel.server.create_app()
     run_alembic()
     app.run('0.0.0.0', 8000, debug=debug)
