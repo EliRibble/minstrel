@@ -1,9 +1,9 @@
 from chryso.schema import metadata, table  # pylint: disable=unused-import
-from sqlalchemy import Boolean, Column, Float, ForeignKey, Index, Integer, String
+from sqlalchemy import BigInteger, Boolean, Column, Float, ForeignKey, Index, Integer, String
 
 Track = table('track',
     Column('md5', String(32), nullable=False),
-    Column('size', Integer, nullable=False),
+    Column('size', BigInteger, nullable=False),
 )
 Index('track_key_properties',
     Track.c.md5,
