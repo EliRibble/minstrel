@@ -5,6 +5,8 @@ window.onload = function() {
   var player = document.getElementById('player');
   player.play();
   console.log('playing');
+  player.volume = 0.3;
+
   if(player.error) {
     console.log('error');
   }
