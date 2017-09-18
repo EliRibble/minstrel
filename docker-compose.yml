@@ -1,7 +1,7 @@
 version: '2'
 services:
     db:
-        container_name: minstrel-db
+        container_name: db
         image: authentise/pgcrypto
     web:
         command: /src/bin/minstrel-debug
