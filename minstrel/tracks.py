@@ -7,8 +7,9 @@ import minstrel.db
 MUSIC_ROOT = '/music'
 
 class Track():
-    def __init__(self, path):
-        self.path = path
+    def __init__(self, path, uuid):
+        self.path   = path
+        self.uuid   = uuid
 
     def md5(self):
         with open(self.path, 'rb') as f:
@@ -18,15 +19,29 @@ class Track():
         return os.path.getsize(self.path)
 
     def url(self):
-        return '/track/' + os.path.basename(self.path)
+        return '/track/' + str(self.uuid)
 
 def add_all_to_database():
-    tracks = get_all()
+    tracks = [Track(
+        path    = os.path.join(MUSIC_ROOT, track),
+        uuid    = None,
+    ) for track in os.listdir(MUSIC_ROOT) if os.path.isfile(os.path.join(MUSIC_ROOT, track))]
     for track in tracks:
         minstrel.db.add_track(track)
 
+def get(uuid):
+    location = minstrel.db.get_track_location(uuid)
+    return Track(
+        path    = location['location'],
+        uuid    = location['track'],
+    )
+
 def get_all():
-    return [Track(os.path.join(MUSIC_ROOT, track)) for track in os.listdir(MUSIC_ROOT) if os.path.isfile(os.path.join(MUSIC_ROOT, track))]
+    locations = minstrel.db.all_track_locations()
+    return [Track(
+        path    = location['location'],
+        uuid    = location['track'],
+    ) for location in locations]
 
 def next_track_for_mood(mood):
     return random.choice(get_all())

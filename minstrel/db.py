@@ -22,3 +22,23 @@ def add_track(track):
     )
     engine.execute(query)
     LOGGER.info("Added track %s with UUID %s", track.path, track_id)
+
+def all_tracks():
+    engine = chryso.connection.get()
+    query = minstrel.tables.Track.select()
+    results = engine.execute(query).fetchall()
+    return [dict(row) for row in results]
+
+def all_track_locations():
+    engine = chryso.connection.get()
+    query = minstrel.tables.TrackLocation.select()
+    results = engine.execute(query).fetchall()
+    return [dict(row) for row in results]
+
+def get_track_location(uuid):
+    engine = chryso.connection.get()
+    query = minstrel.tables.TrackLocation.select().where(
+        minstrel.tables.TrackLocation.c.track == uuid
+    )
+    results = engine.execute(query).fetchone()
+    return dict(results)

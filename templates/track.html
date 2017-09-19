@@ -41,12 +41,14 @@ window.onload = function() {
 </script>
 {% endblock %}
 {% block main_content %}
-<h1>{{filename}}</h1>
+<h1>{{track.path}}</h1>
+<h2>{{mood}}</h2>
 <audio id="player" controls>
- <source src="/music/{{filename}}/" type="audio/mp3" autoplay="true">
+ <source src="{{track.path}}/" type="audio/mp3" autoplay="true">
  Your browser does not support audio
 </audio>
 <form method="POST" action="/next/">
   <input type="submit" value="next"></input>
 </form>
+<form method="POST" action="/
 {% endblock %}
