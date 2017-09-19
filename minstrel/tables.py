@@ -1,5 +1,5 @@
 from chryso.schema import metadata, table  # pylint: disable=unused-import
-from sqlalchemy import BigInteger, Boolean, Column, Float, ForeignKey, Index, Integer, String
+from sqlalchemy import BigInteger, Boolean, Column, DateTime, Float, ForeignKey, Index, Integer, String
 
 Track = table('track',
     Column('md5', String(32), nullable=False),
@@ -20,4 +20,5 @@ Build = table('play',
     Column('track', None, ForeignKey('track.uuid'), nullable=False),
     Column('mood', String(1024), nullable=False),
     Column('positive_feedback', Boolean(), nullable=True),
+    Column('reinforced_at_time', DateTime(), nullable=True),
 )
