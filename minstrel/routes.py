@@ -27,11 +27,12 @@ def next_track():
     next_track = minstrel.tracks.next_track_for_mood(MOOD)
     return flask.redirect(next_track.url())
 
+@blueprint.route('/music/<path:path>/')
+def send_music(path):
+    return flask.send_from_directory('/music/', path)
+
 @blueprint.route('/track/<uuid>/')
 def track(uuid):
     _track = minstrel.tracks.get(uuid)
     return flask.render_template('track.html', mood=MOOD, track=_track)
 
-@blueprint.route('/music/<path:path>/')
-def send_music(path):
-    return flask.send_from_directory('/music/', path)
