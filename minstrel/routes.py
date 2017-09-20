@@ -14,6 +14,10 @@ def index():
     tracks = minstrel.tracks.get_all()
     return flask.render_template('root.html', tracks=tracks)
 
+@blueprint.route('/favicon.ico')
+def favicon():
+    return flask.send_from_directory('/src/static/', 'favicon.ico')
+
 @blueprint.route('/mood/', methods=['POST'])
 def mood_post():
     global MOOD
