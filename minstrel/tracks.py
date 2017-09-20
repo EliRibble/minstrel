@@ -1,9 +1,11 @@
 import hashlib
+import logging
 import os
 import random
 
 import minstrel.db
 
+LOGGER = logging.getLogger(__name__)
 MUSIC_ROOT = '/music'
 
 class Track():
@@ -43,5 +45,17 @@ def get_all():
         uuid    = location['track'],
     ) for location in locations]
 
+def played(mood, played_seconds, positive_feedback, track):
+    LOGGER.info("Played track %s for %s seconds on mood %s with positive feedback %s", track, played_seconds, mood, positive_feedback)
+    minstrel.db.create_play(
+        mood                = mood,
+        played_seconds      = played_seconds,
+        positive_feedback   = positive_feedback,
+        track               = track,
+    )
+
 def next_track_for_mood(mood):
     return random.choice(get_all())
+
+def reinforce(track_uuid, positive=True):
+    minstrel.db.reinforce(track_uuid, positive=positive)

@@ -35,6 +35,18 @@ def all_track_locations():
     results = engine.execute(query).fetchall()
     return [dict(row) for row in results]
 
+def create_play(mood, played_seconds, positive_feedback, track):
+    engine = chryso.connection.get()
+    query = minstrel.tables.Play.insert().values(
+        mood                = mood,
+        played_seconds      = played_seconds,
+        positive_feedback   = positive_feedback,
+        track               = track,
+    )
+    play_id = engine.execute(query).inserted_primary_key[0]
+    LOGGER.debug("Created play %s", play_id)
+    return play_id
+
 def get_track_location(uuid):
     engine = chryso.connection.get()
     query = minstrel.tables.TrackLocation.select().where(
@@ -42,3 +54,17 @@ def get_track_location(uuid):
     )
     results = engine.execute(query).fetchone()
     return dict(results)
+
+def reinforce(track_uuid, positive=True):
+    engine = chryso.connection.get()
+    #query = minstrel.tables.
+
+def set_mood(mood):
+    engine = chryso.connection.get()
+    query = minstrel.tables.State.update().values(mood=mood)
+    engine.execute(query)
+
+def get_mood():
+    engine = chryso.connection.get()
+    query = minstrel.tables.State.select()
+    return engine.execute(query).fetchone()[minstrel.tables.State.c.mood]

@@ -35,8 +35,14 @@ window.onload = function() {
   });
   player.addEventListener('ended', function(e) {
     console.log('playback ended');
-    window.location = '/next/';
+    nextTrack();
   });
+}
+function nextTrack() {
+  var player = document.getElementById('player');
+  console.log("Song was ", player.currentTime / player.duration, "% complete");
+  document.getElementById('currentTime').value = player.currentTime;
+  document.next.submit();
 }
 </script>
 {% endblock %}
@@ -47,8 +53,9 @@ window.onload = function() {
  <source src="{{track.path}}/" type="audio/mp3" autoplay="true">
  Your browser does not support audio
 </audio>
-<form method="POST" action="/next/">
-  <input type="submit" value="next"></input>
+<form name="next" method="POST" action="/next/">
+  <input type="hidden" id="currentTime" name="currentTime" value="0">
+  <input type="hidden" name="track" value="{{ track.uuid }}">
 </form>
-<form method="POST" action="/
+<button type="submit" value="next" onClick="nextTrack()">Next</button>
 {% endblock %}
