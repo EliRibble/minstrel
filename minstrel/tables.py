@@ -16,9 +16,10 @@ TrackLocation = table('track_location',
     Column('location', String(4096), nullable=False),
 )
 
-Build = table('play',
+Play = table('play',
     Column('track', None, ForeignKey('track.uuid'), nullable=False),
     Column('mood', String(1024), nullable=False),
+    Column('played_seconds', Float(), nullable=False),
     Column('positive_feedback', Boolean(), nullable=True),
     Column('reinforced_at_time', DateTime(), nullable=True),
 )
