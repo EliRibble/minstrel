@@ -50,7 +50,7 @@ function nextTrack() {
 <h1>{{track.path}}</h1>
 <h2>{{mood}}</h2>
 <audio id="player" controls>
- <source src="{{track.path}}/" type="audio/mp3" autoplay="true">
+ <source src="{{track.path|urlencode}}/" type="audio/mp3" autoplay="true">
  Your browser does not support audio
 </audio>
 <form name="next" method="POST" action="/next/">
