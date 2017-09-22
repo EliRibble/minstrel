@@ -18,7 +18,7 @@ TrackStore = table('track_storage',
 TrackLocation = table('track_location',
     Column('track', None, ForeignKey('track.uuid'), nullable=False),
     Column('location', String(4096), nullable=False),
-    Column('store', None, ForeignKey('track_storage.uuid'), nullable=True),
+    Column('store', None, ForeignKey('track_storage.uuid'), nullable=False),
 )
 
 Play = table('play',
