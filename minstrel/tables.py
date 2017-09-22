@@ -11,9 +11,14 @@ Index('track_key_properties',
     unique=True,
 )
 
+TrackStore = table('track_storage',
+    Column('name', String(1024), nullable=False),
+)
+
 TrackLocation = table('track_location',
     Column('track', None, ForeignKey('track.uuid'), nullable=False),
     Column('location', String(4096), nullable=False),
+    Column('store', None, ForeignKey('track_storage.uuid'), nullable=True),
 )
 
 Play = table('play',
