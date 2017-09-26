@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block main_content %}
-<p>Welcome to Minstrel. I've got {{ tracks|length }} tracks to play. What's your mood?</p>
+<p>Welcome to Minstrel. I've got <a href="/track/">{{ tracks|length }}</a> tracks to play. What's your mood?</p>
 <form method="POST" action="/mood/">
 <input type="text" name="mood">
 <button class="btn" type="submit">Go</button>

@@ -35,6 +35,20 @@ def all_track_locations():
     results = engine.execute(query).fetchall()
     return [dict(row) for row in results]
 
+def all_track_storages():
+    engine = chryso.connection.get()
+    query = minstrel.tables.TrackStore.select()
+    results = engine.execute(query).fetchall()
+    return [dict(row) for row in results]
+
+def all_track_locations_for_storage(uuid):
+    engine = chryso.connection.get()
+    query = minstrel.tables.TrackLocation.select().where(
+        minstrel.tables.TrackLocation.c.store == uuid
+    )
+    results = engine.execute(query).fetchall()
+    return [dict(row) for row in results]
+
 def create_play(mood, played_seconds, positive_feedback, track):
     engine = chryso.connection.get()
     query = minstrel.tables.Play.insert().values(
@@ -47,10 +61,41 @@ def create_play(mood, played_seconds, positive_feedback, track):
     LOGGER.debug("Created play %s", play_id)
     return play_id
 
-def get_track_location(uuid):
+def get_plays():
     engine = chryso.connection.get()
-    query = minstrel.tables.TrackLocation.select().where(
-        minstrel.tables.TrackLocation.c.track == uuid
+    query = minstrel.tables.Play.select()
+    return [dict(row) for row in engine.execute(query).fetchall()]
+
+def get_track(uuid):
+    engine = chryso.connection.get()
+    query = minstrel.tables.Track.select().where(
+        minstrel.tables.Track.c.uuid == uuid
+    )
+    results = engine.execute(query).fetchone()
+    return dict(results)
+
+def get_track_location(storage=None, track=None, uuid=None):
+    engine = chryso.connection.get()
+    query = minstrel.tables.TrackLocation.select()
+    if uuid:
+        query = query.where(
+            minstrel.tables.TrackLocation.c.track == uuid
+        )
+    elif storage and track:
+        query = query.where(
+            minstrel.tables.TrackLocation.c.store == storage,
+        ).where(
+            minstrel.tables.TrackLocation.c.track == track,
+        )
+    else:
+        raise Exception('you should provide either storage and track or uuid')
+    results = engine.execute(query).fetchone()
+    return dict(results)
+
+def get_track_storage(name):
+    engine = chryso.connection.get()
+    query = minstrel.tables.TrackStore.select().where(
+        minstrel.tables.TrackStore.c.name == name
     )
     results = engine.execute(query).fetchone()
     return dict(results)

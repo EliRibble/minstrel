@@ -50,18 +50,25 @@ function nextTrack() {
 {% set navigation = [
   ("Minstrel", "/"),
   ("Track", "/track/"),
-  (track.uuid, ""),
+  (track_location.track.uuid, ""),
   ] %}
 {% include "nav.html" %}
-<h1>{{track.path}}</h1>
-<h2>{{mood}}</h2>
+<h5>{{mood}}</h5>
+<table>
+<tr><td>Artist</td><td>{{ track_location.artist }}</td></tr>
+<tr><td>Title</td><td>{{ track_location.title }}</td></tr>
+<tr><td>Bitrate</td><td>{{ track_location.audiofile.info.bit_rate_str }}</td></tr>
+<tr><td>Sample Freq</td><td>{{ track_location.audiofile.info.sample_freq }}</td></tr>
+<tr><td>Size</td><td>{{ track_location.audiofile.info.size_bytes }}</td></tr>
+<tr><td>Duration</td><td>{{ track_location.audiofile.info.time_secs }}</td></tr>
+</table>
 <audio id="player" controls>
- <source src="{{track.path|urlencode}}/" type="audio/mp3" autoplay="true">
+ <source src="{{ track_location.stream_url() }}" type="audio/mp3" autoplay="true">
  Your browser does not support audio
 </audio>
 <form name="next" method="POST" action="/next/">
   <input type="hidden" id="currentTime" name="currentTime" value="0">
-  <input type="hidden" name="track" value="{{ track.uuid }}">
+  <input type="hidden" name="track" value="{{ track_location.track.uuid }}">
 </form>
 <button type="submit" value="next" onClick="nextTrack()">Next</button>
 {% endblock %}

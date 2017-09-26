@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block main_content %}
+<p>Your {{ tracks|length }} tracks to play across {{ storages|length }} storage locations.</p>
+
+{% for storage in storages %}
+  <h6>{{ storage.name }} - {{ storage.track_locations|length }}</h6>
+  <table>
+  <tr><th>Name</th><th>Artist</th><th>Length</th></tr>
+  {% for track_location in storage.track_locations %}
+    <tr>
+      <td><a href="/track/{{ track_location.track.uuid }}/">{{ track_location.title }}</a></td>
+      <td>{{ track_location.artist }}</td>
+      <td>{{ track_location.length }}</td>
+    </tr>
+  {% endfor %}
+  </table>
+{% endfor %}
+{% endblock %}
