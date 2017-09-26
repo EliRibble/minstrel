@@ -57,10 +57,14 @@ function nextTrack() {
 <table>
 <tr><td>Artist</td><td>{{ track_location.artist }}</td></tr>
 <tr><td>Title</td><td>{{ track_location.title }}</td></tr>
+{% if track_location.audiofile %}
 <tr><td>Bitrate</td><td>{{ track_location.audiofile.info.bit_rate_str }}</td></tr>
 <tr><td>Sample Freq</td><td>{{ track_location.audiofile.info.sample_freq }}</td></tr>
 <tr><td>Size</td><td>{{ track_location.audiofile.info.size_bytes }}</td></tr>
 <tr><td>Duration</td><td>{{ track_location.audiofile.info.time_secs }}</td></tr>
+{% else %}
+<tr><td>Location</td><td>{{ track_location.location }}</td></tr>
+{% endif %}
 </table>
 <audio id="player" controls>
  <source src="{{ track_location.stream_url() }}" type="audio/mp3" autoplay="true">
